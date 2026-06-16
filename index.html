@@ -14,7 +14,16 @@
         
         /* Estils personalitzats pels popups per distingir-los visualment */
         .popup-gal h3 { color: #859198; margin-bottom: 5px; }
-   
+
+        .leaflet-tooltip.tooltip-gal {
+            background: rgba(88, 141, 64, 0.9);
+            color: white;
+            border: 1px solid #5e8d44;
+            border-radius: 4px;
+            padding: 4px 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+        }
+
         .map-status {
             position: absolute;
             top: 12px;
@@ -223,6 +232,11 @@
             popupContent += `</div>`;
 
             layer.bindPopup(popupContent);
+            layer.bindTooltip(`<strong>${nom_gal}</strong>`, {
+                sticky: true,
+                direction: 'auto',
+                className: 'tooltip-gal'
+            });
 
             // Afegim els esdeveniments del ratolí
             layer.on({
