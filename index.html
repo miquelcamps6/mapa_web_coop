@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa Interactiu GAL </title>
 
+    <!--
+        Aquest fitxer genera un mapa interactiu amb els polígons dels Grups
+        d'Acció Local (GAL). El flux és:
+        1. carregar el GeoJSON
+        2. assignar colors segons el territori
+        3. dibuixar els polígons amb Leaflet
+        4. mostrar popups i tooltips amb informació de cada GAL
+    -->
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     
@@ -22,6 +31,9 @@
             border-radius: 4px;
             padding: 4px 8px;
             box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+            white-space: normal;
+            max-width: 260px;
+            line-height: 1.2;
         }
 
         .map-status {
@@ -49,17 +61,28 @@
     <div id="mapStatus" class="map-status">Carregant dades...</div>
 
     <script>
-        // 1. Inicialitzar el mapa
+        /*
+            Lògica principal del mapa:
+            - Inicialització del mapa base i capa de fons.
+            - Carregada del fitxer GeoJSON amb la geometria dels GAL.
+            - Normalització de dades i assignació de colors.
+            - Creació de popups, tooltips i efectes al passar el ratolí.
+            - Gestió de l'estat visual de la pàgina.
+        */
+
+        // 1. Inicialitzar el mapa amb una vista centrada a Catalunya
         var map = L.map('mapa').setView([41.7, 1.7], 8);
 
-        // Pane per mantenir la capa GALP sempre a sobre
+        // Panell especial per assegurar que la capa dels GAL apareix per sobre de la resta
         var galpPane = map.createPane('galpPane');
         galpPane.style.zIndex = 650;
 
+        // Capa base de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
+        // Elements de la interfície que mostren l'estat de càrrega
         const statusEl = document.getElementById('mapStatus');
         let loadedLayers = 0;
         const totalLayers = 2;
@@ -87,6 +110,25 @@
                     }
                     return response.json();
                 });
+        }
+
+        function dividirEnDuesLinies(text) {
+            const txt = (text || '').trim().replace(/\s+/g, ' ');
+            if (!txt) return '';
+
+            const words = txt.split(' ');
+            if (words.length <= 2) return txt;
+
+            const mig = Math.floor(txt.length / 2);
+            let index = txt.lastIndexOf(' ', mig);
+            if (index === -1) {
+                index = Math.floor(words.length / 2);
+                return `${words.slice(0, index).join(' ')}<br>${words.slice(index).join(' ')}`;
+            }
+
+            const primera = txt.slice(0, index).trim();
+            const segona = txt.slice(index).trim();
+            return `${primera}<br>${segona}`;
         }
 
         // ==========================================
@@ -232,7 +274,7 @@
             popupContent += `</div>`;
 
             layer.bindPopup(popupContent);
-            layer.bindTooltip(`<strong>${nom_gal}</strong>`, {
+            layer.bindTooltip(`<strong>${dividirEnDuesLinies(nom_gal)}</strong>`, {
                 sticky: true,
                 direction: 'auto',
                 className: 'tooltip-gal'
