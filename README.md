@@ -6,7 +6,7 @@ Aquest projecte conté un mapa interactiu basat en Leaflet que mostra les àrees
 
 - [index.html](index.html) — pàgina principal del mapa.
 - [codi_html.html](codi_html.html) — iframe d'exemple per incrustar el mapa.
-- [gal_data.geojson](gal_data.geojson) — dades GeoJSON amb les geometries i propietats dels GALP.
+- [gal_data.geojson](gal_data.geojson) — dades GeoJSON amb les geometries i propietats dels GAL.
 
 **Requeriments**
 
