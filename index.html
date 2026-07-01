@@ -73,9 +73,6 @@
         // 1. Inicialitzar el mapa amb una vista centrada a Catalunya
         var map = L.map('mapa').setView([41.7, 1.7], 8);
 
-        // Panell especial per assegurar que la capa dels GAL apareix per sobre de la resta
-        var galpPane = map.createPane('galpPane');
-        galpPane.style.zIndex = 650;
 
         // Capa base de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -85,7 +82,7 @@
         // Elements de la interfície que mostren l'estat de càrrega
         const statusEl = document.getElementById('mapStatus');
         let loadedLayers = 0;
-        const totalLayers = 2;
+        const totalLayers = 1;
 
         function showStatus(message, isError = false) {
             statusEl.textContent = message;
@@ -255,7 +252,6 @@
         function restaurarEstilGAL(e) {
             capaGAL.resetStyle(e.target);
         }
-
 
         // ==========================================
         // 4. CONFIGURACIÓ DELS POPUPS DIFERENTS
