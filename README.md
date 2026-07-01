@@ -1,12 +1,12 @@
 # Mapa GALP — Projecte
 
-Aquest projecte conté un mapa interactiu basat en Leaflet que mostra les àrees dels Grups d'Acció Local Pesquer (GALP) a Catalunya.
+Aquest projecte conté un mapa interactiu basat en Leaflet que mostra les àrees dels Grups d'Acció Local (GAL) de Catalunya.
 
 **Fitxers principals**
 
 - [index.html](index.html) — pàgina principal del mapa.
 - [codi_html.html](codi_html.html) — iframe d'exemple per incrustar el mapa.
-- [galp_data.geojson](galp_data.geojson) — dades GeoJSON amb les geometries i propietats dels GALP.
+- [gal_data.geojson](gal_data.geojson) — dades GeoJSON amb les geometries i propietats dels GALP.
 
 **Requeriments**
 
