@@ -1,4 +1,4 @@
-# Mapa GALP — Projecte
+# Mapa GAL — Projecte
 
 Aquest projecte conté un mapa interactiu basat en Leaflet que mostra les àrees dels Grups d'Acció Local (GAL) de Catalunya.
 
